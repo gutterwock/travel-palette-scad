@@ -19,7 +19,6 @@ openGapPoint = 10;
 zMargin = 2; // thickness of wall at bottom of pan
 xyMargin = magnetDimensions[0] * 2 + 5; // thickness of wall around pan section
 
-
 panWallDepth = .6; // wall thickness around each pan
 
 panBevelDimensions = [2, 2, 2]; // roundness of pan corners
@@ -113,12 +112,11 @@ module Body() {
         cube([bodyDimensions[0] + 1, bodyDimensions[1] + 1, bodyBevelDimensions[2] * 2], true);
       for(index = [0 : len(xyMagnetPositions) - 1])
         translate(xyMagnetPositions[index])
-        // double check depth of magnets
         translate([0, 0, bodyDimensions[2] / 2 - (magnetDimensions[0] + 1) / 2])
           cylinder(magnetDimensions[0] + 1, magnetDimensions[1], magnetDimensions[1], true);
       translate([-(panColumns) * panDimensions[0] / 2 + magnetDimensions[1] * 2, bodyDimensions[1] / 2 - (magnetDimensions[0] - 1) / 2, 0])
       for(index = [0 : sideMagnets - 1])
-        translate([index * sideMagnetGap, 0, 0]) // doublecheck magnet depth
+        translate([index * sideMagnetGap, 0, 0])
         rotate([90, 0, 0])
           cylinder(magnetDimensions[0] + 1, magnetDimensions[1], magnetDimensions[1], true);
       translate([0, -bodyDimensions[1] / 2, bodyDimensions[2] / 2 - bodyBevelDimensions[2] / 2])
@@ -132,7 +130,7 @@ module Body() {
 translate([0, -bodyDimensions[1] / 2 - 8, 0])
   difference() {
     Body();
-    translate([offsetToCenter(panDimensions[0], panColumns), offsetToCenter(panDimensions[1], panRows), bodyDimensions[2] / 2 - panDimensions[2] / 2 + panBevelDimensions[2] / 2]) // doublecheck hole depth
+    translate([offsetToCenter(panDimensions[0], panColumns), offsetToCenter(panDimensions[1], panRows), bodyDimensions[2] / 2 - panDimensions[2] / 2 + panBevelDimensions[2] / 2])
       for(indexR = [0 : panRows - 1])
         for(indexC = [0 : panColumns - 1])
           translate([indexC * panDimensions[0], indexR * panDimensions[1], 0])
@@ -147,7 +145,7 @@ translate([0, -bodyDimensions[1] / 2 - 8, 0])
     Body();
     translate([offsetToCenter(mixSectionDimensions[0], mixSections), 0, 0])
       for(index = [0 : mixSections - 1])
-        translate([index * mixSectionDimensions[0], 0, bodyDimensions[2] / 2 - (mixSectionDimensions[2] - mixSectionBevelDimensions[2]) / 2]) // doublecheck hole depth
+        translate([index * mixSectionDimensions[0], 0, bodyDimensions[2] / 2 - (mixSectionDimensions[2] - mixSectionBevelDimensions[2]) / 2])
           RoundedCube([mixSectionDimensions[0] - 2 * panWallDepth, mixSectionDimensions[1] - 2 * panWallDepth, mixSectionDimensions[2] + mixSectionBevelDimensions[2]], mixSectionBevelDimensions);
   };
   
